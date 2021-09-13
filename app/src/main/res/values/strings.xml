@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">Demo_Basic_Staff_Android</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="toggle">Toggle</string>
+    <string name="cancel">C</string>
+    <string name="pi">Pi</string>
+    <string name="square">x²</string>
+    <string name="divided">/</string>
+    <string name="operation">=23+34</string>
+    <string name="point">.</string>
+    <string name="zero">0</string>
+    <string name="sign">-1</string>
+    <string name="equal">=</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="plus">+</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="minus">-</string>
+    <string name="multiply">x</string>
+    <string name="nine">9</string>
+    <string name="eight">8</string>
+    <string name="seven">7</string>
+    <string name="delete_history">delete</string>
+    <string name="history1"> >23+3<br/>=26 </string>
 </resources>
