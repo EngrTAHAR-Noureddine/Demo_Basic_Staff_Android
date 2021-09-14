@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.demo_basic_staff_android.database.HistoryDataBase
 import com.example.demo_basic_staff_android.databinding.FragmentCalculatorBinding
 
 class Calculator : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View{
             // bind calculator.kt with fragment.xml
         val binding: FragmentCalculatorBinding =
             DataBindingUtil.inflate(
@@ -20,7 +21,11 @@ class Calculator : Fragment() {
                 container,
                 false
             )
-        val viewModelFactory = CalculatorViewModelFactory()
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = HistoryDataBase.getInstance(application).historyDatabaseDao
+
+        val viewModelFactory = CalculatorViewModelFactory(dataSource)
 
         val buttons = Buttons()
         val calculatorViewModel = ViewModelProvider(this, viewModelFactory).get(CalculatorViewModel::class.java)

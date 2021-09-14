@@ -3,6 +3,7 @@ package com.example.demo_basic_staff_android
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.demo_basic_staff_android.database.HistoryDao
 
 /*
 * AndroidViewModel provides Application context
@@ -40,7 +41,9 @@ data class Buttons(
     val pi : String = Math.PI.toString(),
 )
 
-class CalculatorViewModel :ViewModel(){
+class CalculatorViewModel(
+    val database: HistoryDao,
+) :ViewModel(){
     private var _result = MutableLiveData<String>()
     private var _addOperand  = MutableLiveData<Boolean>()
     val result: LiveData<String>
