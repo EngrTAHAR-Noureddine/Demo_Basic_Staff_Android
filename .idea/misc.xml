@@ -7,7 +7,7 @@
         <entry key="app/src/main/res/drawable/delete_24.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/drawable/pi_math.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35643115942028986" />
-        <entry key="app/src/main/res/layout/fragment_calculator.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/fragment_calculator.xml" value="0.5" />
       </map>
     </option>
   </component>

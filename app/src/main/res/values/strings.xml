@@ -10,7 +10,7 @@
     <string name="operation">=23+34</string>
     <string name="point">.</string>
     <string name="zero">0</string>
-    <string name="sign">-1</string>
+    <string name="sign">(-)</string>
     <string name="equal">=</string>
     <string name="four">4</string>
     <string name="five">5</string>
