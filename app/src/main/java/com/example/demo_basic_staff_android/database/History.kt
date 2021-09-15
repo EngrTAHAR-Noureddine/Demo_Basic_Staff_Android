@@ -10,7 +10,7 @@ data class History(
     var historyId: Long = 0L,
 
     @ColumnInfo(name = "operation")
-    val operation: String = "",
+    var operation: String = "",
 
     @ColumnInfo(name = "result")
     var result: String = "",
