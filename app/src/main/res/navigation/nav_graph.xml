@@ -6,7 +6,7 @@
     app:startDestination="@id/calculator">
     <fragment
         android:id="@+id/calculator"
-        android:name="com.example.demo_basic_staff_android.Calculator"
+        android:name="com.example.demo_basic_staff_android.calculator.Calculator"
         android:label="fragment_calculator"
         tools:layout="@layout/fragment_calculator" />
 </navigation>

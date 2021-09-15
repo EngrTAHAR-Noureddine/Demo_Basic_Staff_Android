@@ -1,4 +1,4 @@
-package com.example.demo_basic_staff_android
+package com.example.demo_basic_staff_android.calculator
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.demo_basic_staff_android.R
 import com.example.demo_basic_staff_android.database.HistoryDataBase
 import com.example.demo_basic_staff_android.databinding.FragmentCalculatorBinding
 

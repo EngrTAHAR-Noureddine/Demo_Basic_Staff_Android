@@ -3,15 +3,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.demo_basic_staff_android.Calculator">
+    tools:context="com.example.demo_basic_staff_android.calculator.Calculator">
 
     <data>
         <variable
             name="calculatorViewModel"
-            type="com.example.demo_basic_staff_android.CalculatorViewModel" />
+            type="com.example.demo_basic_staff_android.calculator.CalculatorViewModel" />
         <variable
             name="button"
-            type="com.example.demo_basic_staff_android.Buttons" />
+            type="com.example.demo_basic_staff_android.calculator.Buttons" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +21,8 @@
         android:orientation="vertical">
 
 
-        <FrameLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/history_result"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -33,17 +34,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintVertical_weight="2">
-    <!--    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">-->
-            <TextView
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rclHistory"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/light_history"
-                android:text="@string/history1"/>
-   <!--     </LinearLayout>-->
-        </FrameLayout>
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/result_field"
