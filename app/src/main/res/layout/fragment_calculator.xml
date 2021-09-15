@@ -62,7 +62,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="@{calculatorViewModel.result}"
                 android:textColor="@color/result_text"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
         </FrameLayout>
 
         <LinearLayout
@@ -661,7 +661,8 @@
             app:layout_constraintBottom_toTopOf="@+id/result_field"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="1.0"
+            android:onClick="@{()->calculatorViewModel.onClear()}"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
