@@ -1,9 +1,11 @@
 package com.example.demo_basic_staff_android.calculator
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.demo_basic_staff_android.database.History
 import com.example.demo_basic_staff_android.database.HistoryDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /*
 * AndroidViewModel provides Application context
@@ -42,10 +44,12 @@ data class Buttons(
 )
 
 class CalculatorViewModel(
-    val database: HistoryDao,
+    private val database: HistoryDao,
 ) :ViewModel(){
     private var _result = MutableLiveData<String>()
     private var _addOperand  = MutableLiveData<Boolean>()
+    var histories = database.getAllHistories()
+
     val result: LiveData<String>
         get() = _result
 
@@ -71,63 +75,106 @@ class CalculatorViewModel(
         if(!op.contains(_result.value))_addOperand.value = false
         if(_result.value!=null) if(_result.value!!.length>1) _result.value=_result.value!!.dropLast(1)
     }
-    fun resultOperation(){
-        val result :String = _result.value!!.removePrefix("=")
-        var op1 : Double
-        val op2: Double
-        val split : List<String>
+    fun resultOperation() {
+        viewModelScope.launch{
+            val result: String = _result.value!!.removePrefix("=")
+            var op1: Double
+            val op2: Double
+            val split: List<String>
+            val newOperation = History()
+            newOperation.operation = ">"+result
         when {
             result.contains("-") -> {
-                split= result.split("-")
-                if(split[0].isNotEmpty()){
+                split = result.split("-")
+                if (split[0].isNotEmpty()) {
                     op1 = split[0].toDouble()
-                    op2 = if(split[1].isEmpty()) 0.0 else split[1].toDouble()
+                    op2 = if (split[1].isEmpty()) 0.0 else split[1].toDouble()
                     op1 -= op2
-                    _result.value ="="+ op1.toString()
-                   _addOperand.value = false
-                }else _result.value = "=Error"
+
+                    _result.value = "=" + op1.toString()
+
+                    newOperation.result = _result.value!!
+
+                    _addOperand.value = false
+                    insert(newOperation)
+                } else _result.value = "=Error"
             }
             result.contains("x") -> {
-                split= result.split("x")
-                if(split[0].isNotEmpty()){
+                split = result.split("x")
+                if (split[0].isNotEmpty()) {
                     op1 = split[0].toDouble()
-                    op2 = if(split[1].isEmpty()) 0.0 else split[1].toDouble()
+                    op2 = if (split[1].isEmpty()) 0.0 else split[1].toDouble()
                     op1 *= op2
-                    _result.value ="="+ op1.toString()
+                    _result.value = "=" + op1.toString()
+                    newOperation.result = _result.value!!
+
                     _addOperand.value = false
-                }else _result.value = "=Error"
+                    insert(newOperation)
+                } else _result.value = "=Error"
             }
             result.contains("/") -> {
-                split= result.split("/")
-                if(split[0].isNotEmpty()){
+                split = result.split("/")
+                if (split[0].isNotEmpty()) {
                     op1 = split[0].toDouble()
-                    op2 = if(split[1].isEmpty()) 0.0 else split[1].toDouble()
+                    op2 = if (split[1].isEmpty()) 0.0 else split[1].toDouble()
                     op1 /= op2
-                    _result.value ="="+ op1.toString()
+                    _result.value = "=" + op1.toString()
+                    newOperation.result = _result.value!!
+
                     _addOperand.value = false
-                }else _result.value = "=Error"
+                    insert(newOperation)
+                } else _result.value = "=Error"
             }
             result.contains("+") -> {
-                split= result.split("+")
-                if(split[0].isNotEmpty()){
+                split = result.split("+")
+                if (split[0].isNotEmpty()) {
                     op1 = split[0].toDouble()
-                    op2 = if(split[1].isEmpty()) 0.0 else split[1].toDouble()
+                    op2 = if (split[1].isEmpty()) 0.0 else split[1].toDouble()
                     op1 += op2
-                    _result.value ="="+ op1.toString()
+                    _result.value = "=" + op1.toString()
+                    newOperation.result = _result.value!!
+
                     _addOperand.value = false
-                }else _result.value = "=Error"
+                    insert(newOperation)
+                } else _result.value = "=Error"
             }
         }
-
+                    }
 
     }
+
+
+
+
+
     init {
         _result.value = "="
         _addOperand.value = false
+        initializeHistory()
+    }
+    private fun initializeHistory() {
+        viewModelScope.launch {
+            histories = database.getAllHistories()
+        }
     }
 
 
+    private suspend fun clearHistoryTable() { // suspend seems like await in dart not same
+        withContext(Dispatchers.IO) {
+            database.clear()
+        }
+    }
 
+    fun onClear(){
+        viewModelScope.launch {
+            clearHistoryTable()
+        }
+    }
+    private suspend fun insert(operationSyntax: History) {
+        withContext(Dispatchers.IO) {
+            database.insert(operationSyntax)
+        }
+    }
 
     override fun onCleared() {
         _result.value = "="
